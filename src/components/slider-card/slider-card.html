@@ -1,0 +1,26 @@
+  <ion-card >
+    <ion-card-header text-wrap>
+      {{title}}
+       <ion-icon name="more" (click)="view_more=!view_more" style="float:right;font-size: 2.2em;line-height: 22px;"></ion-icon>
+    </ion-card-header>
+    <ion-card-content *ngIf="array && !view_more" text-center>
+      <ion-icon  *ngIf="!slides_start" style="font-size: 3.2em;" name="arrow-dropleft" (click)="slides.slidePrev()" ></ion-icon>
+      <ion-slides (ionSlideReachEnd)="slides_end=true" (ionSlideReachStart)="slides_start=true" (ionSlidePrevStart)="slides_end=false" (ionSlideNextStart) ="slides_start=false"  slidesPerView="4" style="display: inline-block;width: 75%;    vertical-align: bottom;">
+        <ion-slide *ngFor="let a of array" style="width:60px!important;">
+          <ion-avatar *ngIf="a.images" item-left [style.background-image]="'url('+a.images[0].url+')'" class="icon-avatar "style=""></ion-avatar>
+          <ion-avatar *ngIf="a.icons" item-left [style.background-image]="'url('+a.icons[0].url+')'" class="icon-avatar "style=""></ion-avatar>
+        </ion-slide>
+      </ion-slides>
+      <ion-icon *ngIf="!slides_end" style="font-size: 3.2em;"  name="arrow-dropright" (click)="slides.slideNext()"></ion-icon>
+    </ion-card-content>
+    <ion-card-content *ngIf="array && view_more">
+      <ion-list>
+        <ion-item *ngFor="let a of array">
+          <ion-avatar *ngIf="a.images" item-left [style.background-image]="'url('+a.images[0].url+')'" class="icon-avatar "style=""></ion-avatar>
+          <ion-avatar *ngIf="a.icons" item-left [style.background-image]="'url('+a.icons[0].url+')'" class="icon-avatar "style=""></ion-avatar>
+          {{a.name}}
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+
+  </ion-card>
