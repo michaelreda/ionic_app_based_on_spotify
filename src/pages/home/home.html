@@ -4,14 +4,21 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content class="separateBG">
+  <ion-card >
+    <ion-card-header text-wrap>
+      {{featured_playlists.message}}
+    </ion-card-header>
+    <ion-card-content *ngIf="featured_playlists.playlists" text-center>
+      <ion-icon  *ngIf="!slides_start" style="font-size: 3.2em;" name="arrow-dropleft" (click)="slides.slidePrev()" ></ion-icon>
+      <ion-slides (ionSlideReachEnd)="slides_end=true" (ionSlideReachStart)="slides_start=true" (ionSlidePrevStart)="slides_end=false" (ionSlideNextStart) ="slides_start=false"  slidesPerView="4" style="display: inline-block;width: 75%;    vertical-align: bottom;">
+        <ion-slide *ngFor="let playlist of featured_playlists.playlists.items" style="width:60px!important;">
+          <ion-avatar item-left [style.background-image]="'url('+playlist.images[0].url+')'" class="icon-avatar "style=""></ion-avatar>
+        </ion-slide>
+      </ion-slides>
+      <ion-icon *ngIf="!slides_end" style="font-size: 3.2em;"  name="arrow-dropright" (click)="slides.slideNext()"></ion-icon>
+    </ion-card-content>
+
+  </ion-card>
+
 </ion-content>
