@@ -23,12 +23,17 @@ export class SliderCardComponent {
 
   }
 
-  icon_url(item){
-    if(item.images){
-      return 'url('+item.images[0].url+')';
+   icon_url(item) {
+    if (item.images || item.icons) {
+      if (item.type=="playlist"||item.type=="album") {
+        return 'url(' + item.images[0].url + ')';
+      } else {
+        return 'url(' + item.icons[0].url + ')';
+      }
     }else{
-      return 'url('+item.icons[0].url+')';
+      return 'url(' + "http://www.freeiconspng.com/uploads/music-red-symbol-free-icon-27.png" + ')';
     }
+
   }
 
   open_page(item){

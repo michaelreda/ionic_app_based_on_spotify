@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Settings
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>AutoPlay music</ion-label>
+      <ion-toggle [(ngModel)]="auto_play" (ngModelChange)="auto_play_toggle()"></ion-toggle>
+    </ion-item>
+  </ion-list>
+</ion-content>

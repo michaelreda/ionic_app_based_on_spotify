@@ -8,6 +8,7 @@
 
   <ion-navbar>
     <ion-title>{{playlist.name}}</ion-title>
+    <button ion-button color="primary" small rounded style="float:right" *ngIf="tracks" (click)="play_tracks()"><ion-icon name="play"></ion-icon> Play All</button>
   </ion-navbar>
 
 </ion-header>
@@ -21,13 +22,12 @@
      <ion-list>
         <ion-item *ngFor="let track of tracks" (click)="play_track(track.track)">
           <ion-avatar item-left [style.background-image]="icon_url(track.track.album)" class="icon-avatar "style=""></ion-avatar>
-          {{track.track.name}}
+          <ion-label  [color]="change_selected_track_color(track.track.id)">{{track.track.name}}</ion-label>
+          <ion-icon item-end color="primary" name="musical-notes" *ngIf="track.track.id==selected_track_id" ></ion-icon>
         </ion-item>
       </ion-list>
   </ion-list>
 
-  <audio controls autoplay (ended)="hi='end'" src="https://p.scdn.co/mp3-preview/4839b070015ab7d6de9fec1756e1f3096d908fba" style="width:100%;position:absolute;bottom:0;">
-    Your user agent does not support the HTML5 Audio element.
-  </audio>
+
 
 </ion-content>

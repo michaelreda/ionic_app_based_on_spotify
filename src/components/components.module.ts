@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { SliderCardComponent } from './slider-card/slider-card';
+import { PlayerComponent } from './player/player';
 @NgModule({
-	declarations: [SliderCardComponent],
+	declarations: [SliderCardComponent,
+    PlayerComponent],
 	imports: [],
-	exports: [SliderCardComponent]
+	exports: [SliderCardComponent,
+    PlayerComponent]
 })
 export class ComponentsModule {}
