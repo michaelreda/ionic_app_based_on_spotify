@@ -20,7 +20,7 @@
 
   <ion-list>
      <ion-list>
-        <ion-item *ngFor="let track of tracks" (click)="play_track(track.track)">
+        <ion-item *ngFor="let track of displayed_tracks" (click)="play_track(track.track)">
           <ion-avatar item-left [style.background-image]="icon_url(track.track.album)" class="icon-avatar "style=""></ion-avatar>
           <ion-label  [color]="change_selected_track_color(track.track.id)">{{track.track.name}}</ion-label>
           <ion-icon item-end color="primary" name="musical-notes" *ngIf="track.track.id==selected_track_id" ></ion-icon>
@@ -28,6 +28,9 @@
       </ion-list>
   </ion-list>
 
+<ion-infinite-scroll *ngIf="displayed_tracks.length!=tracks.length" (ionInfinite)="load_more_tracks($event)">
+   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>
 
 
 </ion-content>

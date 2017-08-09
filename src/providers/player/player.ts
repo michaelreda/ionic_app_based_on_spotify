@@ -44,6 +44,7 @@ export class PlayerProvider {
 
   play_tracks(tracks) {
     if (tracks) {
+      this.tracks_to_be_played=[];
       this.play_track(tracks[0].track);//play first track
       var tmp_tracks= [];
       tmp_tracks=tmp_tracks.concat(tracks);

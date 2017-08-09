@@ -1,6 +1,19 @@
-<audio controls autoplay *ngIf="current_track" (ended)="song_ended()" [src]="current_track"
+<audio class="audio" controls autoplay *ngIf="current_track" (ended)="song_ended()" [src]="current_track"
   style="width:100%;position:absolute;bottom:5rem;display:block;z-index:2">
   Your user agent does not support the HTML5 Audio element.
 </audio>
 <!-- autoplay="{{auto_play}}" -->
 <!-- https://p.scdn.co/mp3-preview/4839b070015ab7d6de9fec1756e1f3096d908fba -->
+
+<script>
+  $(function() {
+    $(".audio").prop("volume", 0.0);
+    $(".audio").on("timeupdate", function() {
+        if (this.currentTime < 2) {
+            $(this).stop().animate({volume: 1.0}, 1000);
+        } else if (this.currentTime > 27) {
+            $(this).stop().animate({volume: 0.0}, 1000);
+        }
+    });
+});
+</script>
