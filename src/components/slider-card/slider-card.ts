@@ -1,4 +1,5 @@
-import { Slides } from 'ionic-angular';
+import { PlaylistPage } from './../../pages/playlist/playlist';
+import { Slides, NavController } from 'ionic-angular';
 import { Component, ViewChild, Input } from '@angular/core';
 
 /**
@@ -18,8 +19,20 @@ export class SliderCardComponent {
   @Input() array: any;
   @Input() title: string;
   view_more:boolean=false;
-  constructor() {
+  constructor(private navCtrl : NavController) {
 
   }
 
+  icon_url(item){
+    if(item.images){
+      return 'url('+item.images[0].url+')';
+    }else{
+      return 'url('+item.icons[0].url+')';
+    }
+  }
+
+  open_page(item){
+    if(item.type=="playlist")
+      this.navCtrl.push(PlaylistPage,item);//passing a playlist
+  }
 }

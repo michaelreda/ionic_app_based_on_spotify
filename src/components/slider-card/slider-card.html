@@ -7,17 +7,15 @@
       <ion-icon  *ngIf="!slides_start" style="font-size: 3.2em;" name="arrow-dropleft" (click)="slides.slidePrev()" ></ion-icon>
       <ion-slides (ionSlideReachEnd)="slides_end=true" (ionSlideReachStart)="slides_start=true" (ionSlidePrevStart)="slides_end=false" (ionSlideNextStart) ="slides_start=false"  slidesPerView="4" style="display: inline-block;width: 75%;    vertical-align: bottom;">
         <ion-slide *ngFor="let a of array" style="width:60px!important;">
-          <ion-avatar *ngIf="a.images" item-left [style.background-image]="'url('+a.images[0].url+')'" class="icon-avatar "style=""></ion-avatar>
-          <ion-avatar *ngIf="a.icons" item-left [style.background-image]="'url('+a.icons[0].url+')'" class="icon-avatar "style=""></ion-avatar>
+          <ion-avatar item-left (click)="open_page(a)" [style.background-image]="icon_url(a)" class="icon-avatar "style=""></ion-avatar>
         </ion-slide>
       </ion-slides>
       <ion-icon *ngIf="!slides_end" style="font-size: 3.2em;"  name="arrow-dropright" (click)="slides.slideNext()"></ion-icon>
     </ion-card-content>
     <ion-card-content *ngIf="array && view_more">
       <ion-list>
-        <ion-item *ngFor="let a of array">
-          <ion-avatar *ngIf="a.images" item-left [style.background-image]="'url('+a.images[0].url+')'" class="icon-avatar "style=""></ion-avatar>
-          <ion-avatar *ngIf="a.icons" item-left [style.background-image]="'url('+a.icons[0].url+')'" class="icon-avatar "style=""></ion-avatar>
+        <ion-item *ngFor="let a of array" (click)="open_page(a)">
+          <ion-avatar item-left [style.background-image]="icon_url(a)" class="icon-avatar "style=""></ion-avatar>
           {{a.name}}
         </ion-item>
       </ion-list>

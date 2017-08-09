@@ -1,3 +1,4 @@
+import { PlaylistPage } from './../pages/playlist/playlist';
 import { SliderCardComponent } from './../components/slider-card/slider-card';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,6 +13,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { HttpModule} from '@angular/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+// import { NativeAudio } from '@ionic-native/native-audio';
+
 
 @NgModule({
   declarations: [
@@ -20,12 +23,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ContactPage,
     HomePage,
     TabsPage,
-    SliderCardComponent
+    SliderCardComponent,
+    PlaylistPage,
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule
+    HttpModule,
+    // NativeAudio
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -33,7 +38,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    PlaylistPage
   ],
   providers: [
     StatusBar,

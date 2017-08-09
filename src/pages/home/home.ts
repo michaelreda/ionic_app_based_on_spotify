@@ -30,6 +30,7 @@ export class HomePage {
     http.post("https://accounts.spotify.com/api/token", "grant_type=client_credentials", options).subscribe(data => {
       var res = JSON.parse(data['_body']);
       this.access_token = res.access_token;
+      localStorage.setItem('access_token', this.access_token);
       console.log(this.access_token);
       this.get_featured_playlists();
       this.get_new_releases();
