@@ -85,24 +85,6 @@ export class PlaylistPage {
               if (localStorage.getItem('auto_play') == "true")
                 this.play_tracks();
             });
-    }else{
-        this.http.get(this.playlist.href+"/playlists", options).subscribe(data => {
-              var res = JSON.parse(data['_body']);
-              console.log(res);
-              this.tracks= [];
-              for(let track of res.items){
-                this.tracks.push({"track":track});
-              }
-              var j = 0;
-              for (j = 0; j < 10; j++) {
-                if (this.tracks[this.i + j] != undefined)
-                  this.displayed_tracks.push(this.tracks[this.i + j]);
-              }
-              this.i += j;
-              console.log(this.tracks);
-              if (localStorage.getItem('auto_play') == "true")
-                this.play_tracks();
-            });
     }
   }
 
