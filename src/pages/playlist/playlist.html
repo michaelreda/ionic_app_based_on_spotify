@@ -7,8 +7,8 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{playlist.name}}</ion-title>
-    <button ion-button color="primary" small rounded style="float:right" *ngIf="tracks" (click)="play_tracks()"><ion-icon name="play"></ion-icon> Play All</button>
+    <ion-title text-wrap style="display: -webkit-inline-box;text-overflow: ellipsis;width: 40rem;">{{playlist.name}}</ion-title>
+    <button ion-button color="primary" small style="float:right" *ngIf="tracks" (click)="play_tracks()"><ion-icon name="play"></ion-icon> Play All</button>
   </ion-navbar>
 
 </ion-header>

@@ -37,7 +37,8 @@ export class SliderCardComponent {
   }
 
   open_page(item){
-    if(item.type=="playlist")
+    if(item.type=="playlist"||"album")
       this.navCtrl.push(PlaylistPage,item);//passing a playlist
+
   }
 }

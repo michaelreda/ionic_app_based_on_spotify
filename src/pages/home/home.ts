@@ -1,8 +1,10 @@
+import { Network } from '@ionic-native/network';
+import { LoaderProvider } from './../../providers/loader/loader';
 import { SliderCardComponent } from './../../components/slider-card/slider-card';
 import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Http, RequestOptions, Headers } from '@angular/http';
-import { Slides, LoadingController } from 'ionic-angular';
+import { Slides, LoadingController, AlertController } from 'ionic-angular';
 
 
 
@@ -18,11 +20,14 @@ export class HomePage {
   categories = {};
   slides_end: boolean = false;
   slides_start: boolean = true;
-  constructor(public navCtrl: NavController, public http: Http, public loadingCtrl: LoadingController) {
-    let loading = this.loadingCtrl.create({
-      content: 'El bata btdanden...'
+  constructor(public navCtrl: NavController, public http: Http, public loader: LoaderProvider, private network: Network, private alertCtrl: AlertController) {
+    this.network.onDisconnect().subscribe(() => {
+      this.alertCtrl.create({
+        title: 'No Internet Connection!',
+        subTitle: 'Please connect to an internet resoruce and try to reopen the app again'
+      }).present();
     });
-    loading.present();
+    loader.start('El bata btdanden...');
     let headers = new Headers();
     headers.append("Content-Type", 'application/x-www-form-urlencoded');
     headers.append("Authorization", "Basic " + btoa("d7474c1848e441f3ab9020d2736916da:cc8557a14fad43b59b028079ba7e36b7"));
@@ -36,9 +41,7 @@ export class HomePage {
       this.get_new_releases();
       this.get_categories();
 
-      setTimeout(() => {
-        loading.dismiss();
-      }, 1000);
+      loader.end(1000);
     });
   }
 

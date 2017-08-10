@@ -1,3 +1,4 @@
+import { LoaderProvider } from './../../providers/loader/loader';
 import { PlayerProvider } from './../../providers/player/player';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Component } from '@angular/core';
@@ -25,12 +26,9 @@ export class PlaylistPage {
   playlist: any;
   auto_play: string = "autoplay";
   i = 0;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, public loadingCtrl: LoadingController, public playerP: PlayerProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http, public playerP: PlayerProvider,public loader:LoaderProvider) {
 
-    let loading = this.loadingCtrl.create({
-      content: 'loading playlist...'
-    });
-    loading.present();
+    loader.start('loading playlist...');
 
     this.playlist = navParams.data;
     this.get_tracks();
@@ -39,9 +37,7 @@ export class PlaylistPage {
     if (localStorage.getItem('auto_play') && localStorage.getItem('auto_play') == "false")
       this.auto_play = "";
 
-    setTimeout(() => {
-      loading.dismiss();
-    }, 3000);
+    loader.end(3000);
 
     playerP.current_track_changed.subscribe(track => {
       console.log("selected_track_id_changed");
@@ -55,7 +51,6 @@ export class PlaylistPage {
 
   get_tracks() {
     let headers = new Headers();
-    // headers.append("Access-Control-Allow-Origin",'1');
     headers.append("Content-Type", 'application/x-www-form-urlencoded;charset=utf8');
     headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
     let options = new RequestOptions({ headers: headers });
@@ -64,7 +59,7 @@ export class PlaylistPage {
       var res = JSON.parse(data['_body']);
       this.tracks = res.items;
       var j = 0;
-      for (j = 0; j < 15; j++) {
+      for (j = 0; j < 10; j++) {
         if (this.tracks[this.i + j] != undefined)
           this.displayed_tracks.push(this.tracks[this.i + j]);
       }
@@ -90,7 +85,7 @@ export class PlaylistPage {
     setTimeout(() => {
       console.log(this.i);
       var j = 0;
-      for (j = 0; j < 15; j++) {
+      for (j = 0; j < 10; j++) {
         if (this.tracks[this.i + j] != undefined)
           this.displayed_tracks.push(this.tracks[this.i + j]);
       }
@@ -100,8 +95,6 @@ export class PlaylistPage {
       // console.log('Async operation has ended');
       infiniteScroll.complete();
     }, 1000);
-
-
   }
 
   icon_url(item) {

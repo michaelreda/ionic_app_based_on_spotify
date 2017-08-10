@@ -14,8 +14,11 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { HttpModule} from '@angular/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Network } from '@ionic-native/network';
+
+
 import { PlayerProvider } from '../providers/player/player';
-// import { NativeAudio } from '@ionic-native/native-audio';
+import { LoaderProvider } from '../providers/loader/loader';
 
 
 @NgModule({
@@ -33,7 +36,7 @@ import { PlayerProvider } from '../providers/player/player';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
-    // NativeAudio
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -48,7 +51,9 @@ import { PlayerProvider } from '../providers/player/player';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    PlayerProvider
+    PlayerProvider,
+    LoaderProvider,
+    Network
   ]
 })
 export class AppModule {}

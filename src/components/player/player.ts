@@ -21,15 +21,14 @@ export class PlayerComponent {
     if (localStorage.getItem('auto_play') && localStorage.getItem('auto_play') == "false")
       this.auto_play = "";
 
-
     playerP.current_track_changed.subscribe(track => {
       console.log("current_track_changed");
       if (track.preview_url == null) {
         console.log("null preview_url");
-        this.toastCtrl.create({
-          message: 'Sorry this song is not available now',
-          duration: 3000,
-        }).present();
+        // this.toastCtrl.create({
+        //   message: 'Sorry this song is not available now',
+        //   duration: 3000,
+        // }).present();
         this.playerP.play_next_track();
       }else{
         this.current_track=track.preview_url;

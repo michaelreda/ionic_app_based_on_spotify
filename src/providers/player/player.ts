@@ -11,6 +11,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class PlayerProvider {
+  duplicate_tracks: any = [];
   tracks: any;
   current_track: any;
   tracks_to_be_played: any = [];
@@ -18,8 +19,8 @@ export class PlayerProvider {
   @Output() current_track_changed = new EventEmitter<any>();
 
 
-  constructor(public http: Http,public toastCtrl:ToastController) {
-    this.current_track_ended.subscribe(()=>{
+  constructor(public http: Http, public toastCtrl: ToastController) {
+    this.current_track_ended.subscribe(() => {
       this.play_next_track();
     });
   }
@@ -44,28 +45,38 @@ export class PlayerProvider {
 
   play_tracks(tracks) {
     if (tracks) {
-      this.tracks_to_be_played=[];
+      if (localStorage.getItem('loop') == "true") {
+        this.duplicate_tracks = [];
+        this.duplicate_tracks = this.duplicate_tracks.concat(tracks);
+      }
+      console.log("duplicate tracks length " + this.duplicate_tracks.length);
+      this.tracks_to_be_played = [];
       this.play_track(tracks[0].track);//play first track
-      var tmp_tracks= [];
-      tmp_tracks=tmp_tracks.concat(tracks);
+      var tmp_tracks = [];
+      tmp_tracks = tmp_tracks.concat(tracks);
       tmp_tracks.shift(); //remove first track
-      this.tracks_to_be_played=this.tracks_to_be_played.concat(tmp_tracks);
+      this.tracks_to_be_played = this.tracks_to_be_played.concat(tmp_tracks);
     }
   }
 
-  play_next_track(){
+  play_next_track() {
     console.log("playing next track");
-    if(this.tracks_to_be_played.length==0){
-      this.toastCtrl.create({
+    if (this.tracks_to_be_played.length == 0) {
+      if (localStorage.getItem('loop') == "true") {
+        console.log("looping playlist again..");
+        this.play_tracks(this.duplicate_tracks);
+      } else {
+        this.toastCtrl.create({
           message: 'No more songs in your playlist',
           duration: 3000,
         }).present();
-    }else{
+      }
+    } else {
       console.log(this.tracks_to_be_played);
       this.play_track(this.tracks_to_be_played[0].track);
       this.tracks_to_be_played.shift();
     }
-      
+
   }
 
 
