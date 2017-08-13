@@ -13,8 +13,10 @@ import { ToastController } from "ionic-angular";
   templateUrl: 'player.html'
 })
 export class PlayerComponent {
+  track:any;
   current_track: any;
   auto_play: string = "autoplay";
+  track_details:boolean=false;
   constructor(public playerP: PlayerProvider,private toastCtrl: ToastController) {
     
     
@@ -32,11 +34,28 @@ export class PlayerComponent {
         this.playerP.play_next_track();
       }else{
         this.current_track=track.preview_url;
+        this.track=track;
       }
     });
   }
 
   song_ended(){
       this.playerP.current_track_ended.emit();
+  }
+
+  clicked(){
+    console.log(this.track);
+    this.track_details=!this.track_details;
+  }
+  icon_url(item) {
+    if(!item){
+      return 'url(' + this.track.images[2].url + ')';
+    }
+    if (item.images && item.images.length != 0) {
+      return 'url(' + item.images[0].url + ')';
+    } else {
+      return 'url(' + "http://www.freeiconspng.com/uploads/music-red-symbol-free-icon-27.png" + ')';
+    }
+
   }
 }

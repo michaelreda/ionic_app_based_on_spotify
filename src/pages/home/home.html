@@ -8,7 +8,26 @@
 
   <slider-card *ngIf="featured_playlists.playlists" [title]="featured_playlists.message" [array]="featured_playlists.playlists.items"></slider-card>
 
+  <ion-card *ngIf="featured_playlists.playlists && random_playlist" class="image-card"[style.background-image]="icon_url(random_playlist)" (click)="open_page(random_playlist)">
+    <ion-card-content>
+    </ion-card-content>
+  </ion-card>
+   <style>
+     .image-card{
+       background-repeat: no-repeat;
+      background-position: 50%;
+      background-size: 100% 100%;
+      height:300px;
+     }
+    </style>
+
   <slider-card *ngIf="new_releases.albums" [title]="'New Releases'" [array]="new_releases.albums.items"></slider-card>
+
+   <ion-card *ngIf="new_releases.albums && random_album" class="image-card"[style.background-image]="icon_url(random_album)" (click)="open_page(random_album)">
+    <ion-card-content>
+      <h1 style="color:white">{{random_album.name}}</h1>
+    </ion-card-content>
+  </ion-card>
 
   <slider-card *ngIf="categories.categories" [title]="'Categories'" [array]="categories.categories.items"></slider-card>
 

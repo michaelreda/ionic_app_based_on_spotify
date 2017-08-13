@@ -1,8 +1,9 @@
+import { PlaylistPage } from './../playlist/playlist';
 import { Network } from '@ionic-native/network';
 import { LoaderProvider } from './../../providers/loader/loader';
 import { SliderCardComponent } from './../../components/slider-card/slider-card';
 import { Component, ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Slides, LoadingController, AlertController } from 'ionic-angular';
 
@@ -13,14 +14,16 @@ import { Slides, LoadingController, AlertController } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  random_album: any;
+  random_playlist: any = {};
   @ViewChild(Slides) slides: Slides;
   access_token: string;
-  featured_playlists = {};
-  new_releases = {};
-  categories = {};
+  featured_playlists:any = {};
+  new_releases:any = {};
+  categories:any = {};
   slides_end: boolean = false;
   slides_start: boolean = true;
-  constructor(public navCtrl: NavController, public http: Http, public loader: LoaderProvider, private network: Network, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public http: Http, public loader: LoaderProvider, private network: Network, private alertCtrl: AlertController,public toastCtrl:ToastController) {
     this.network.onDisconnect().subscribe(() => {
       this.alertCtrl.create({
         title: 'No Internet Connection!',
@@ -40,7 +43,6 @@ export class HomePage {
       this.get_featured_playlists();
       this.get_new_releases();
       this.get_categories();
-
       loader.end(1000);
     });
   }
@@ -55,6 +57,7 @@ export class HomePage {
       var res = JSON.parse(data['_body']);
       this.featured_playlists = res;
       console.log(this.featured_playlists);
+      this.get_random_playlist();
     });
   }
 
@@ -68,6 +71,7 @@ export class HomePage {
       var res = JSON.parse(data['_body']);
       this.new_releases = res;
       console.log(this.new_releases);
+      this.get_random_album();
     });
   }
 
@@ -84,4 +88,80 @@ export class HomePage {
     });
   }
 
+  get_random_number(max){
+    return Math.floor( Math.random()*max) ;
+  }
+
+  get_random_playlist(){
+    this.random_playlist = this.featured_playlists.playlists.items[this.get_random_number(this.featured_playlists.playlists.items.length)];
+  }
+  get_random_album(){
+    this.random_album = this.new_releases.albums.items[this.get_random_number(this.new_releases.albums.items.length)];
+  }
+
+  icon_url(item) {
+    if (item.images || item.icons) {
+      if (item.type == "playlist" || item.type == "album") {
+        return 'url(' + item.images[0].url + ')';
+      } else {
+        return 'url(' + item.icons[0].url + ')';
+      }
+    } else {
+      return 'url(' + "http://www.freeiconspng.com/uploads/music-red-symbol-free-icon-27.png" + ')';
+    }
+
+  }
+
+
+   open_page(item) {
+    if (item.type == "playlist" || item.type == "album") {
+      console.log("hi");
+      this.navCtrl.push(PlaylistPage, item);//passing a playlist
+    } else {
+      let headers = new Headers();
+      headers.append("Content-Type", 'application/x-www-form-urlencoded;charset=utf8');
+      headers.append("Authorization", "Bearer " + localStorage.getItem('access_token'));
+      let options = new RequestOptions({ headers: headers });
+      this.http.get(item.href + "/playlists", options).subscribe(data => {
+        var res = JSON.parse(data['_body']);
+        let playlists = res.playlists.items;
+        let inputs = [];
+        for (var playlist of playlists) {
+          inputs.push({
+            type: 'radio',
+            label: playlist.name,
+            value: playlist.id
+          })
+        }
+        this.alertCtrl.create({
+          title: 'Select a playlist',
+          inputs: inputs,
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: data => {
+
+              }
+            },
+            {
+              text: 'Play',
+              handler: data => {
+                console.log(data);
+                if (!data) {
+                  this.toastCtrl.create({
+                    message: 'Please select a playlist',
+                    duration: 3000,
+                  }).present();
+                }
+                this.navCtrl.push(PlaylistPage, {id:data,type:"playlist"});
+              }
+            }
+          ]
+        }).present();
+
+      });
+    }
+
+  }
 }
