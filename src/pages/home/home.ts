@@ -24,11 +24,15 @@ export class HomePage {
   slides_end: boolean = false;
   slides_start: boolean = true;
   constructor(public navCtrl: NavController, public http: Http, public loader: LoaderProvider, private network: Network, private alertCtrl: AlertController,public toastCtrl:ToastController) {
+    var no_connection_alert :any;
     this.network.onDisconnect().subscribe(() => {
-      this.alertCtrl.create({
+      no_connection_alert= this.alertCtrl.create({
         title: 'No Internet Connection!',
-        subTitle: 'Please connect to an internet resoruce and try to reopen the app again'
+        subTitle: 'Please connect to an internet resource ...'
       }).present();
+    });
+    this.network.onConnect().subscribe(()=>{
+      no_connection_alert.dismiss();
     });
     loader.start('El bata btdanden...');
     let headers = new Headers();
