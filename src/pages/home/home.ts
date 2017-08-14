@@ -24,17 +24,14 @@ export class HomePage {
   slides_end: boolean = false;
   slides_start: boolean = true;
   constructor(public navCtrl: NavController, public http: Http, public loader: LoaderProvider, private network: Network, private alertCtrl: AlertController,public toastCtrl:ToastController) {
-    var no_connection_alert :any;
     this.network.onDisconnect().subscribe(() => {
-      no_connection_alert= this.alertCtrl.create({
-        title: 'No Internet Connection!',
-        subTitle: 'Please connect to an internet resource ...'
-      }).present();
+      loader.no_connection_start();
     });
-    this.network.onConnect().subscribe(()=>{
-      no_connection_alert.dismiss();
+    this.network.onDisconnect().subscribe(() => {
+      loader.no_connection_end();
     });
-    loader.start('El bata btdanden...');
+    
+    // loader.start('El bata btdanden...');
     let headers = new Headers();
     headers.append("Content-Type", 'application/x-www-form-urlencoded');
     headers.append("Authorization", "Basic " + btoa("d7474c1848e441f3ab9020d2736916da:cc8557a14fad43b59b028079ba7e36b7"));
