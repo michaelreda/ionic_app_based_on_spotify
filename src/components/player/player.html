@@ -6,9 +6,11 @@
 <div *ngIf="current_track" style="width:100%;position:absolute;bottom:5rem;display:block;z-index:3;background-color: #f8f8f8;padding-left:10px;">
   <ion-grid>
     <ion-row>
-      <button ion-button round (click)="play_pause()" style="padding: 0 1em;" color="yellow"> 
-    <ion-icon *ngIf="pause_play_btn==1" name="play"></ion-icon>
-    <ion-icon *ngIf="pause_play_btn==0" name="pause"></ion-icon>
+      <button ion-button round outline (click)="play_pause()" style="padding: 0 1em;" color="yellow"
+      [style.background-image]="get_play_btn_icon()" style="background-size: contain;background-repeat: no-repeat; background-position: center;border-width: medium;"> 
+    <!-- <ion-icon *ngIf="pause_play_btn==1" name="play"></ion-icon>
+    <ion-icon *ngIf="pause_play_btn==0" name="pause"></ion-icon> -->
+    
      </button>
       <ion-range [(ngModel)]="audio_current_time" color="yellow" pin="true" min="0" max="30" style="width:80%;padding-top:5px;    margin-left: 5px;" (ionChange)="seeker_changed()"></ion-range>
     </ion-row>
@@ -20,7 +22,7 @@
 
 
 <audio id="audio" hidden controls autoplay *ngIf="current_track" (ended)="song_ended()" [src]="current_track" style="width:100%;position:absolute;bottom:5rem;display:block;z-index:2"
-  (timeupdate)="time_updated()" (play)="audio_fadein()">
+  (timeupdate)="time_updated()" (play)="audio_fadein();trigger_play_icon()" (pause)="trigger_pause_icon()">
   Your user agent does not support the HTML5 Audio element.
 </audio>
 <!-- <ion-fab bottom right style="padding-bottom:9rem" *ngIf="current_track" (click)="clicked()">

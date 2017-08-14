@@ -14,7 +14,8 @@ import { Observable } from "rxjs/Rx";
   templateUrl: 'player.html'
 })
 export class PlayerComponent {
-  audio_current_time: number=0;
+  pause_play_btn_icon: number=0;
+  audio_current_time: number = 0;
   track: any;
   current_track: any;
   auto_play: string = "autoplay";
@@ -112,5 +113,19 @@ export class PlayerComponent {
     if(Math.abs(audio.currentTime-this.audio_current_time)>3){
        audio.currentTime= this.audio_current_time;
     }
+  }
+
+   get_play_btn_icon() {
+    if(this.pause_play_btn_icon==0){
+       return 'url(' + "assets/pause.png" + ')';
+    }else{
+       return 'url(' + "assets/duck_loader.gif" + ')'; 
+    }
+  }
+  trigger_play_icon(){
+    this.pause_play_btn_icon=1;
+  }
+   trigger_pause_icon(){
+    this.pause_play_btn_icon=0;
   }
 }

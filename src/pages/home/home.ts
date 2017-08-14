@@ -31,7 +31,7 @@ export class HomePage {
       loader.no_connection_end();
     });
     
-    loader.start('El bata btdanden...');
+    loader.start('البطة جاية فى السكة');
     let headers = new Headers();
     headers.append("Content-Type", 'application/x-www-form-urlencoded');
     headers.append("Authorization", "Basic " + btoa("d7474c1848e441f3ab9020d2736916da:cc8557a14fad43b59b028079ba7e36b7"));
