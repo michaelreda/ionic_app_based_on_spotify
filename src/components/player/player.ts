@@ -109,6 +109,8 @@ export class PlayerComponent {
 
   seeker_changed(){
     var audio: any = document.getElementById("audio");
-    audio.currentTime= this.audio_current_time;
+    if(Math.abs(audio.currentTime-this.audio_current_time)>3){
+       audio.currentTime= this.audio_current_time;
+    }
   }
 }

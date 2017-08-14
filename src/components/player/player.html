@@ -10,7 +10,7 @@
     <ion-icon *ngIf="pause_play_btn==1" name="play"></ion-icon>
     <ion-icon *ngIf="pause_play_btn==0" name="pause"></ion-icon>
      </button>
-      <ion-range [(ngModel)]="audio_current_time" color="yellow" pin="true" min="0" max="30" style="width:80%;padding-top:5px;    margin-left: 5px;" (ion-change)="seeker_changed()"></ion-range>
+      <ion-range [(ngModel)]="audio_current_time" color="yellow" pin="true" min="0" max="30" style="width:80%;padding-top:5px;    margin-left: 5px;" (ionChange)="seeker_changed()"></ion-range>
     </ion-row>
   </ion-grid>
   <style>

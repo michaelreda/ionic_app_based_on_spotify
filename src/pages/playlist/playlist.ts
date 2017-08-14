@@ -36,7 +36,7 @@ export class PlaylistPage {
     if (localStorage.getItem('auto_play') && localStorage.getItem('auto_play') == "false")
       this.auto_play = "";
 
-    loader.end(3000);
+    
 
     playerP.current_track_changed.subscribe(track => {
       console.log("selected_track_id_changed");
@@ -67,6 +67,7 @@ export class PlaylistPage {
               console.log(this.tracks);
               if (localStorage.getItem('auto_play') == "true")
                 this.play_tracks();
+              this.loader.end(3000);
             });
     }else if(this.playlist.type== "album"){
           this.http.get("https://api.spotify.com/v1/albums/"+this.playlist.id+"/tracks", options).subscribe(data => {
@@ -84,6 +85,7 @@ export class PlaylistPage {
               console.log(this.tracks);
               if (localStorage.getItem('auto_play') == "true")
                 this.play_tracks();
+              this.loader.end(3000);
             });
     }
   }
