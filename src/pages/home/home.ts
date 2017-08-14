@@ -27,7 +27,7 @@ export class HomePage {
     this.network.onDisconnect().subscribe(() => {
       loader.no_connection_start();
     });
-    this.network.onDisconnect().subscribe(() => {
+    this.network.onConnect().subscribe(() => {
       loader.no_connection_end();
     });
     
