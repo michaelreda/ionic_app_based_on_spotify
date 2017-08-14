@@ -31,4 +31,15 @@ export class LoaderProvider {
     }, time);
   }
 
+  no_connection_start(){
+    this.loading = this.loadingCtrl.create({
+      content: '<strong>No Internet Connection!</strong><br>Please connect to an internet resource ...',
+      spinner:'hide'
+    });
+    this.loading.present();
+  }
+  no_connection_end(){
+    this.loading.dismiss();
+  }
+
 }
