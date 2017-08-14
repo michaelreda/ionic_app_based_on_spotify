@@ -1,3 +1,11 @@
 player {
-
+ .range-slider {
+         .range-bar {
+          height: 0.5rem!important;
+        }
+        .range-pin{
+            webkit-transform: translate3d(0, 0, 0) scale(1);
+             transform: translate3d(0, 0, 0) scale(1);
+        }
+    }
 }

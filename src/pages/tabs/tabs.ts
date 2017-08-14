@@ -6,7 +6,8 @@ import { AboutPage } from '../about/about';
 import { HomePage } from '../home/home';
 
 @Component({
-  templateUrl: 'tabs.html'
+  templateUrl: 'tabs.html',
+  selector: 'tabs'
 })
 export class TabsPage {
 

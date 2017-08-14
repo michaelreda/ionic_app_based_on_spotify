@@ -14,10 +14,12 @@ import { Observable } from "rxjs/Rx";
   templateUrl: 'player.html'
 })
 export class PlayerComponent {
+  audio_current_time: number=0;
   track: any;
   current_track: any;
   auto_play: string = "autoplay";
   track_details: boolean = false;
+  pause_play_btn = 1;
   constructor(public playerP: PlayerProvider, private toastCtrl: ToastController) {
 
 
@@ -36,18 +38,15 @@ export class PlayerComponent {
       } else {
         this.current_track = track.preview_url;
         this.track = track;
-        if (document.getElementById("audio")) {
-          var audio: any = document.getElementById("audio");
-          audio.volume = 0;
-          this.audio_fadein(audio);
-        }
+        this.pause_play_btn = 0;
+
       }
     });
   }
 
   song_ended() {
     this.playerP.current_track_ended.emit();
-
+    this.pause_play_btn = 1;
   }
 
   clicked() {
@@ -69,6 +68,7 @@ export class PlayerComponent {
   time_updated() {
     var audio: any = document.getElementById("audio");
     // console.log(audio.currentTime);
+    this.audio_current_time =Math.floor(audio.currentTime);
     if (audio.currentTime > 27) {
       this.audio_fadeout(audio);
     }
@@ -83,13 +83,32 @@ export class PlayerComponent {
     });
   }
 
-  audio_fadein(audio: any) {
-    var o = Observable.interval(375).subscribe(x => {
-      if (audio.volume + 0.1 < 1)
-        audio.volume += 0.1;
-      else
-        o.unsubscribe();
-    });
+  audio_fadein() {
+    if (document.getElementById("audio")) {
+      var audio: any = document.getElementById("audio");
+      audio.volume = 0;
+
+      var o = Observable.interval(375).subscribe(x => {
+        if (audio.volume + 0.1 < 1)
+          audio.volume += 0.1;
+        else
+          o.unsubscribe();
+      });
+    }
   }
 
+  play_pause(){
+     var audio: any = document.getElementById("audio");
+    if(this.pause_play_btn==1){
+      audio.play();
+    }else{
+      audio.pause();
+    }
+    this.pause_play_btn = (this.pause_play_btn==0)? 1:0;
+  }
+
+  seeker_changed(){
+    var audio: any = document.getElementById("audio");
+    audio.currentTime= this.audio_current_time;
+  }
 }

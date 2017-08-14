@@ -1,0 +1,12 @@
+tabs{
+
+ span.tab-button-text {
+    font-size: large!important;
+  }
+  .tabs-ios .tab-button[aria-selected=true] .tab-button-icon {
+    color: color($colors,yellow);
+    -webkit-text-stroke-width: 1px;
+   -webkit-text-stroke-color: black;
+  }
+
+}

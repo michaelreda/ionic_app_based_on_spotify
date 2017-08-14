@@ -15,7 +15,7 @@
     <ion-card-content *ngIf="array && view_more">
       <ion-list>
         <ion-item *ngFor="let a of array" (click)="open_page(a)">
-          <ion-avatar item-left [style.background-image]="icon_url(a)" class="icon-avatar "style=""></ion-avatar>
+          <ion-avatar item-left [style.background-image]="icon_url(a)" class="icon-avatar "style="z-index:2"></ion-avatar>
           {{a.name}}
         </ion-item>
       </ion-list>
