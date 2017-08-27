@@ -112,6 +112,7 @@ export class PlayerComponent {
     var audio: any = document.getElementById("audio");
     if(Math.abs(audio.currentTime-this.audio_current_time)>3){
        audio.currentTime= this.audio_current_time;
+       audio.volume = 1;
     }
   }
 
