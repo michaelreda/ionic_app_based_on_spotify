@@ -1,3 +1,4 @@
+
 import { PlayerComponent } from './../components/player/player';
 import { SettingsPage } from './../pages/settings/settings';
 import { PlaylistPage } from './../pages/playlist/playlist';
